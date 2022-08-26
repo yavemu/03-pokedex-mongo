@@ -23,15 +23,7 @@ export class PokemonService {
 
       return pokemon;
     } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException(
-          `Pokemon with ${JSON.stringify(error.keyValue)} is already created.`,
-        );
-      }
-      console.log(error);
-      throw new InternalServerErrorException(
-        `Can't create Pokemon, undefined Error`,
-      );
+      this.handleExceptions(error, 'create');
     }
   }
 
@@ -67,19 +59,23 @@ export class PokemonService {
 
       return { ...pokemon.toJSON(), ...updatePokemonDto };
     } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException(
-          `Pokemon with ${JSON.stringify(error.keyValue)} is already created.`,
-        );
-      }
-      console.log(error);
-      throw new InternalServerErrorException(
-        `Can't update Pokemon, undefined Error`,
-      );
+      this.handleExceptions(error, 'update');
     }
   }
 
   remove(id: number) {
     return `This action removes a #${id} pokemon`;
+  }
+
+  private handleExceptions(error: any, action: string) {
+    if (error.code === 11000) {
+      throw new BadRequestException(
+        `Pokemon with ${JSON.stringify(error.keyValue)} is already created.`,
+      );
+    }
+    console.log(error);
+    throw new InternalServerErrorException(
+      `Can't ${action} Pokemon, undefined Error`,
+    );
   }
 }
