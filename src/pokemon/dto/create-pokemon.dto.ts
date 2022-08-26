@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
@@ -16,5 +17,6 @@ export class CreatePokemonDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
+  @Transform((param) => param.value.toLowerCase())
   name: string;
 }
