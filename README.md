@@ -38,6 +38,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Execute seeds
+
+<a href="http://localhost:3000/api/v2/seed" target="blank">http://localhost:3000/api/v2/seed</a>
+
 ## Test
 
 ```bash
